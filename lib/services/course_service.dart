@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/course.dart';
 
@@ -34,10 +34,10 @@ class CourseService {
     }).toList();
   }
 
-  Future<String?> uploadThumbnail(File file) async {
+  Future<String?> uploadThumbnail(Uint8List bytes, String fileName) async {
     final user = _db.auth.currentUser!;
-    final path = '${user.id}/${DateTime.now().millisecondsSinceEpoch}_${file.uri.pathSegments.last}';
-    await _db.storage.from('course-images').upload(path, file);
+    final path = '${user.id}/${DateTime.now().millisecondsSinceEpoch}_$fileName';
+    await _db.storage.from('course-images').uploadBinary(path, bytes);
     return _db.storage.from('course-images').getPublicUrl(path);
   }
 

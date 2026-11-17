@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LessonService {
@@ -9,16 +9,47 @@ class LessonService {
     return rows.cast<Map<String, dynamic>>();
   }
 
+  String _getMimeType(String name) {
+    final ext = name.split('.').last.toLowerCase();
+    switch (ext) {
+      case 'pdf': return 'application/pdf';
+      case 'png': return 'image/png';
+      case 'jpg':
+      case 'jpeg': return 'image/jpeg';
+      case 'mp4': return 'video/mp4';
+      case 'doc': return 'application/msword';
+      case 'docx': return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      case 'ppt': return 'application/vnd.ms-powerpoint';
+      case 'pptx': return 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+      case 'txt': return 'text/plain';
+      case 'zip': return 'application/zip';
+      default: return 'application/octet-stream';
+    }
+  }
+
+  Future<String?> uploadLessonFile(Uint8List bytes, String fileName) async {
+    final user = _db.auth.currentUser!;
+    final safeName = fileName.replaceAll(RegExp(r'[^a-zA-Z0-9._-]'), '_');
+    final path = 'lessons/${user.id}/${DateTime.now().millisecondsSinceEpoch}_$safeName';
+    final mime = _getMimeType(fileName);
+    await _db.storage.from('course-images').uploadBinary(
+      path,
+      bytes,
+      fileOptions: FileOptions(contentType: mime, upsert: true),
+    );
+    return _db.storage.from('course-images').getPublicUrl(path);
+  }
+
   Future<void> addLesson({
     required String courseId,
     required String title,
-    required String videoUrl,
+    String? videoUrl,
     required int position,
   }) async {
     await _db.from('lessons').insert({
       'course_id': courseId,
       'title': title,
-      'video_url': videoUrl,
+      'video_url': videoUrl ?? '',
       'position': position,
     });
   }

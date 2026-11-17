@@ -55,29 +55,49 @@ class _CertificateScreenState extends State<CertificateScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Certificate')),
+    backgroundColor: AppTheme.background,
+    appBar: AppBar(
+      backgroundColor: AppTheme.background,
+      title: const Text('Certificate', style: TextStyle(color: AppTheme.ink, fontWeight: FontWeight.w800)),
+    ),
     body: Center(child: Padding(padding: const EdgeInsets.all(24), child: Card(child: Padding(
-      padding: const EdgeInsets.all(24), child: FutureBuilder<bool>(
+      padding: const EdgeInsets.all(26), child: FutureBuilder<bool>(
         future: completion,
         builder: (context, snap) {
           final done = snap.data == true;
           return Column(mainAxisSize: MainAxisSize.min, children: [
-            Icon(Icons.workspace_premium, size: 65, color: done ? AppTheme.teal : Colors.grey),
-            const SizedBox(height: 12),
-            const Text('Certificate of Completion', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppTheme.navy), textAlign: TextAlign.center),
+            Container(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: done ? AppTheme.yellow.withOpacity(0.15) : AppTheme.surfaceLight,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(Icons.workspace_premium_rounded, size: 68, color: done ? AppTheme.yellow : AppTheme.muted),
+            ),
+            const SizedBox(height: 16),
+            const Text('Certificate of Completion', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: AppTheme.ink), textAlign: TextAlign.center),
             const SizedBox(height: 8),
-            Text(widget.course.title, textAlign: TextAlign.center),
+            Text(widget.course.title, textAlign: TextAlign.center, style: const TextStyle(color: AppTheme.purpleLight, fontSize: 15, fontWeight: FontWeight.w700)),
             const SizedBox(height: 18),
-            if (snap.connectionState == ConnectionState.waiting) const CircularProgressIndicator()
-            else Text(done ? 'You have completed every lesson. Your certificate is ready.' : 'Complete every lesson in this course to unlock your certificate.', textAlign: TextAlign.center),
-            const SizedBox(height: 18),
-            FilledButton.icon(
-              onPressed: done ? () async {
-                try { await printCertificate(); }
-                catch (e) { if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()))); }
-              } : null,
-              icon: const Icon(Icons.picture_as_pdf),
-              label: const Text('Generate PDF certificate'),
+            if (snap.connectionState == ConnectionState.waiting) const CircularProgressIndicator(color: AppTheme.yellow)
+            else Text(done ? 'Congratulations! You have completed every lesson. Your certificate is ready to print or download.' : 'Complete every lesson in this course to unlock your certificate.', textAlign: TextAlign.center, style: const TextStyle(color: AppTheme.muted, height: 1.4)),
+            const SizedBox(height: 22),
+            SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: FilledButton.icon(
+                style: FilledButton.styleFrom(
+                  backgroundColor: done ? AppTheme.yellow : AppTheme.surfaceLight,
+                  foregroundColor: done ? Colors.black : AppTheme.muted,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                ),
+                onPressed: done ? () async {
+                  try { await printCertificate(); }
+                  catch (e) { if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()))); }
+                } : null,
+                icon: const Icon(Icons.picture_as_pdf_rounded),
+                label: const Text('Generate PDF Certificate', style: TextStyle(fontWeight: FontWeight.w900)),
+              ),
             ),
           ]);
         },

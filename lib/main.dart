@@ -20,7 +20,9 @@ class LearnWithMeApp extends StatelessWidget {
     return MaterialApp(
       title: 'Learn With Me',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
+      theme: AppTheme.dark,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.dark,
       home: const AuthGate(),
     );
   }

@@ -59,20 +59,24 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Container(
                 height: 76, width: 76,
-                decoration: BoxDecoration(gradient: AppTheme.brandGradient, borderRadius: BorderRadius.circular(24), boxShadow: const [BoxShadow(color: Color(0x30286A91), blurRadius: 20, offset: Offset(0, 8))]),
+                decoration: BoxDecoration(
+                  gradient: AppTheme.brandGradient,
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: [BoxShadow(color: AppTheme.purple.withOpacity(0.5), blurRadius: 20, offset: const Offset(0, 8))],
+                ),
                 child: const Icon(Icons.school_rounded, color: Colors.white, size: 40),
               ),
               const SizedBox(height: 28),
-              const Text('LEARN WITH ME', style: TextStyle(color: AppTheme.teal, fontSize: 12, letterSpacing: 2.2, fontWeight: FontWeight.w800)),
+              const Text('LEARN WITH ME', style: TextStyle(color: AppTheme.purpleLight, fontSize: 12, letterSpacing: 2.2, fontWeight: FontWeight.w800)),
               const SizedBox(height: 8),
-              const Text('Your next skill starts here.', style: TextStyle(fontSize: 30, height: 1.15, fontWeight: FontWeight.w800, color: AppTheme.navy)),
+              const Text('Your next skill starts here.', style: TextStyle(fontSize: 30, height: 1.15, fontWeight: FontWeight.w800, color: AppTheme.ink)),
               const SizedBox(height: 10),
               const Text('Learn from expert tutors. Teach what you love.', style: TextStyle(color: AppTheme.muted, fontSize: 15)),
               const SizedBox(height: 30),
               Card(child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(22),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  const Text('Welcome back', style: TextStyle(fontSize: 21, fontWeight: FontWeight.w800, color: AppTheme.ink)),
+                  const Text('Welcome back', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppTheme.ink)),
                   const SizedBox(height: 5),
                   const Text('Choose your account type to continue.', style: TextStyle(color: AppTheme.muted)),
                   const SizedBox(height: 18),
@@ -99,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20),
               Center(child: Wrap(alignment: WrapAlignment.center, children: [
                 const Text("Don't have an account? ", style: TextStyle(color: AppTheme.muted)),
-                GestureDetector(onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RegisterScreen())), child: const Text('Create one', style: TextStyle(color: AppTheme.blue, fontWeight: FontWeight.w800))),
+                GestureDetector(onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RegisterScreen())), child: const Text('Create one', style: TextStyle(color: AppTheme.yellow, fontWeight: FontWeight.w800))),
               ])),
               const SizedBox(height: 22),
               const Center(child: Text('Learn • Grow • Share', style: TextStyle(color: AppTheme.muted, letterSpacing: 1.2, fontSize: 12))),

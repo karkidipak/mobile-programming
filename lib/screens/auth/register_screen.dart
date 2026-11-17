@@ -63,16 +63,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.background,
-    appBar: AppBar(backgroundColor: AppTheme.background, title: const Text('Create account')),
+    appBar: AppBar(backgroundColor: AppTheme.background, title: const Text('Create account', style: TextStyle(color: AppTheme.ink, fontWeight: FontWeight.w800))),
     body: Center(child: SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(22, 8, 22, 28),
       child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 440), child: Card(
         child: Padding(padding: const EdgeInsets.all(22), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Text('Join our learning community', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: AppTheme.navy)),
+          const Text('Join our community', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: AppTheme.ink)),
           const SizedBox(height: 7),
           const Text('Create an account as a student or tutor.', style: TextStyle(color: AppTheme.muted)),
           const SizedBox(height: 22),
-          const Text('I want to join as', style: TextStyle(fontWeight: FontWeight.w700)),
+          const Text('I want to join as', style: TextStyle(fontWeight: FontWeight.w700, color: AppTheme.purpleLight)),
           const SizedBox(height: 10),
           SegmentedButton<String>(
             showSelectedIcon: false,
